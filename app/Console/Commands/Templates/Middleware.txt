@@ -1,0 +1,17 @@
+<?php
+
+namespace Modules\{module}\src\Http\Middlewares;
+
+use App\Providers\RouteServiceProvider;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
+class {name}
+{
+    public function handle(Request $request, Closure $next)
+    {
+    
+    }
+}

@@ -1,0 +1,14 @@
+<?php
+
+namespace Modules\{module}\src\Http\Controllers;
+
+use Illuminate\Routing\Controller as BaseController;
+
+class {name} extends BaseController
+{
+    public function __construct()
+    {
+        
+    }
+
+}
