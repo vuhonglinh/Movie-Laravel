@@ -9,7 +9,8 @@ return [
     'integer' => ':attribute không hợp lệ',
     'attributes' => [
         'name' => 'Tên',
-        'slug' => 'Slug',
-        'description' => 'Mô tả',
+        'email' => 'Email',
+        'role_id' => 'Nhóm',
+        'password' => 'Mật khẩu',
     ]
 ];

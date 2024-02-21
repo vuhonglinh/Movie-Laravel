@@ -18,6 +18,7 @@
                         <h2>Cập nhật quản trị viên</h2>
                     </div>
                 </div>
+                <!-- end main title -->
 
                 <!-- form -->
                 <div class="col-12">
@@ -27,29 +28,41 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form__group">
-                                        <input value="{{ old('name') ?? $genre->name }}" type="text" name="name"
-                                            class="title form__input" placeholder="Tên thể loại...">
+                                        <input value="{{ old('name') ?? $user->name }}" type="text" name="name"
+                                            class="form__input" placeholder="Họ và tên...">
                                         @error('name')
                                             <span style="color: red">{{ $message }}</span>
                                         @enderror
                                     </div>
-
                                 </div>
                                 <div class="col-6">
                                     <div class="form__group">
-                                        <input value="{{ old('slug') ?? $genre->slug }}" type="text" name="slug"
-                                            class="slug form__input" placeholder="Slug...">
-                                        @error('slug')
+                                        <input type="email" value="{{ old('email') ?? $user->email }}" name="email"
+                                            class="form__input" placeholder="Email...">
+                                        @error('email')
                                             <span style="color: red">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form__group">
-                                        <label style="color: white" for="editor">Mô tả</label>
-                                        <textarea id="editor" name="description" class="form__textarea editor" placeholder="Mô tả...">{{ old('description') ?? $genre->description }}</textarea>
-                                        @error('description')
+                                        <input type="password" value="{{ old('password') }}" name="password"
+                                            class="form__input" placeholder="Mật khẩu...">
+                                        @error('password')
+                                            <span style="color: red">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form__group">
+                                        <select class="js-example-basic-multiple" name="role_id" id="country">
+                                            @foreach ($roles as $item)
+                                                <option
+                                                    {{ old('role_id') ?? $user->role_id == $item->id ? 'selected' : false }}
+                                                    value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('role_id')
                                             <span style="color: red">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -63,6 +76,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </form>
                 </div>
                 <!-- end form -->

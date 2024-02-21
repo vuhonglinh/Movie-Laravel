@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'linhvhph31139@fpt.edu.vn',
             'password' => Hash::make('12345678'),
+            'role_id' => null,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);

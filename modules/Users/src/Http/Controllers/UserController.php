@@ -4,6 +4,8 @@ namespace Modules\Users\src\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Modules\Roles\src\Repositories\RolesRepositoryInterface;
 use Modules\Users\src\Http\Requests\UserRequest;
 use Modules\Users\src\Repositories\UsersRepositoryInterface;
 use Yajra\DataTables\DataTables;
@@ -11,9 +13,11 @@ use Yajra\DataTables\DataTables;
 class UserController extends BaseController
 {
     private $usersRepo;
-    public function __construct(UsersRepositoryInterface $usersRepo)
+    private $rolesRepo;
+    public function __construct(UsersRepositoryInterface $usersRepo, RolesRepositoryInterface $rolesRepo)
     {
         $this->usersRepo = $usersRepo;
+        $this->rolesRepo = $rolesRepo;
     }
 
     public function index()
@@ -45,23 +49,38 @@ class UserController extends BaseController
     }
     public function add()
     {
-        return view('users::add');
+        $roles = $this->rolesRepo->getAll();
+        return view('users::add', compact('roles'));
     }
 
     public function create(UserRequest $request)
     {
-        $this->usersRepo->create($request->except('_token'));
+        $this->usersRepo->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+        ]);
         return redirect(route('admin.users.index'))->with('mess', __('users::messages.create.success'));
     }
 
     public function edit($id)
     {
         $user = $this->usersRepo->find($id);
-        return view('users::edit', compact('user'));
+        $roles = $this->rolesRepo->getAll();
+        return view('users::edit', compact('user', 'roles'));
     }
     public function update(UserRequest $request, $id)
     {
-        $this->usersRepo->update($id, $request->except('_token'));
+        $data =  [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role_id' => $request->role_id,
+        ];
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $this->usersRepo->update($id, $data);
         return back()->with('mess', __('users::messages.update.success'));
     }
 

@@ -1,8 +1,8 @@
 <header class="header">
     <div class="header__content">
         <!-- header logo -->
-        <a href="index.html" class="header__logo">
-            <img src="img/logo.svg" alt="">
+        <a href="{{route('admin.dashboard.index')}}" class="header__logo">
+            <img src="{{ asset('/backend/img/logo.svg') }}" alt="">
         </a>
         <!-- end header logo -->
 

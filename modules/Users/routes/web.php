@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Users\src\Http\Controllers\UserController;
 
-Route::prefix('admin/users')->name('admin.users.')->group(function () {
+Route::middleware(['can:users', 'auth'])->prefix('admin/users')->name('admin.users.')->group(function () {
        Route::get('/', [UserController::class, 'index'])->name('index');
        Route::get('/data', [UserController::class, 'data'])->name('data');
 

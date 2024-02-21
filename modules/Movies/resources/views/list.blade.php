@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- users -->
                 <div class="col-12">
                     <div>
@@ -43,6 +43,7 @@
                                     <th style="width: 10%;">Danh mục</th>
                                     <th style="width: 15%;">Thể loại</th>
                                     <th style="width: 15%;">Quốc gia</th>
+                                    <th>Bình luận</th>
                                     <th>Ngày tạo</th>
                                     <th>Sửa</th>
                                     <th>Xóa</th>
@@ -53,7 +54,7 @@
                 </div>
             </div>
         </div>
-       
+
     </main>
 @endsection
 
@@ -95,8 +96,12 @@
                     data: 'country_id'
                 },
                 {
+                    data: 'comments'
+                },
+                {
                     data: 'created_at'
                 },
+
                 {
                     data: 'edit'
                 },

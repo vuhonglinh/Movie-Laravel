@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Roles\src\Models\Role;
 
 class User extends Authenticatable
 {
@@ -20,4 +21,9 @@ class User extends Authenticatable
         'role_id',
         'password',
     ];
+
+    public function roles()//Liên kết role_id với roles
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
 }

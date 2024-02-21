@@ -11,7 +11,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,22 +21,36 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $id = $this->route()->id;
+        $rule = [
             'name' => 'required|min:6',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:5',
             'role_id' => 'required|integer',
         ];
+        if ($id) {
+            $rule['email'] = 'required|email|unique:users,email,' . $id;
+            if ($this->password) {
+                $rule['password'] = 'min:5';
+            } else {
+                unset($rule['password']);
+            }
+        }
+        return $rule;
     }
     public function messages()
     {
         return [
-            're'
+            'required' => __('users::validation.required'),
+            'email' => __('users::validation.email'),
+            'integer' => __('users::validation.integer'),
+            'unique' => __('users::validation.unique'),
+            'min' => __('users::validation.min'),
         ];
     }
 
     public function attributes()
     {
-        return [];
+        return __('users::validation.attributes');
     }
 }

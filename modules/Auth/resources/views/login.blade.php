@@ -4,6 +4,11 @@
     <div class="sign section--bg" data-bg="{{ asset('/backend/img/bg.jpg') }}">
         <div class="container">
             <div class="row">
+                @if (session('status'))
+                    <div class="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <div class="col-12">
                     <div class="sign__content">
                         <!-- authorization form -->

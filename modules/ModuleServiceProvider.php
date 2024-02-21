@@ -7,16 +7,34 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Modules\Categories\src\Repositories\CategoriesRepository;
 use Modules\Categories\src\Repositories\CategoriesRepositoryInterface;
+use Modules\Comments\src\Repositories\CommentsRepository;
+use Modules\Comments\src\Repositories\CommentsRepositoryInterface;
 use Modules\Countries\src\Repositories\CountriesRepository;
 use Modules\Countries\src\Repositories\CountriesRepositoryInterface;
+use Modules\Customers\src\Repositories\CustomersRepository;
+use Modules\Customers\src\Repositories\CustomersRepositoryInterface;
 use Modules\Episodes\src\Repositories\EpisodesRepository;
 use Modules\Episodes\src\Repositories\EpisodesRepositoryInterface;
 use Modules\Genres\src\Repositories\GenresRepository;
 use Modules\Genres\src\Repositories\GenresRepositoryInterface;
 use Modules\Movies\src\Repositories\MoviesRepository;
 use Modules\Movies\src\Repositories\MoviesRepositoryInterface;
+use Modules\Packages\src\Repositories\PackagesRepository;
+use Modules\Packages\src\Repositories\PackagesRepositoryInterface;
+use Modules\Profile\src\Repositories\ProfileRepository;
+use Modules\Profile\src\Repositories\ProfileRepositoryInterface;
+use Modules\Reviews\src\Repositories\ReviewsRepository;
+use Modules\Reviews\src\Repositories\ReviewsRepositoryInterface;
+use Modules\Roles\src\Repositories\RolesRepository;
+use Modules\Roles\src\Repositories\RolesRepositoryInterface;
+use Modules\TimKiem\src\Repositories\TimKiemRepository;
+use Modules\TimKiem\src\Repositories\TimKiemRepositoryInterface;
+use Modules\TrangChu\src\Repositories\TrangChuRepository;
+use Modules\TrangChu\src\Repositories\TrangChuRepositoryInterface;
 use Modules\Users\src\Repositories\UsersRepository;
 use Modules\Users\src\Repositories\UsersRepositoryInterface;
+use Modules\XemPhim\src\Repositories\XemPhimRepository;
+use Modules\XemPhim\src\Repositories\XemPhimRepositoryInterface;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -70,6 +88,61 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->singleton(
             UsersRepositoryInterface::class,
             UsersRepository::class,
+        );
+
+        //Profile Repositories
+        $this->app->singleton(
+            ProfileRepositoryInterface::class,
+            ProfileRepository::class,
+        );
+
+        //Roles Repositories
+        $this->app->singleton(
+            RolesRepositoryInterface::class,
+            RolesRepository::class,
+        );
+
+        //Customers Repositories
+        $this->app->singleton(
+            CustomersRepositoryInterface::class,
+            CustomersRepository::class,
+        );
+
+        //Customers Repositories
+        $this->app->singleton(
+            CommentsRepositoryInterface::class,
+            CommentsRepository::class,
+        );
+
+        //Reviews Repositories
+        $this->app->singleton(
+            ReviewsRepositoryInterface::class,
+            ReviewsRepository::class,
+        );
+
+        //Packages Repositories
+        $this->app->singleton(
+            PackagesRepositoryInterface::class,
+            PackagesRepository::class,
+        );
+
+        ///////Client///////////
+        //TrangChu Repositories
+        $this->app->singleton(
+            TrangChuRepositoryInterface::class,
+            TrangChuRepository::class,
+        );
+
+        //XemPhim Repositories
+        $this->app->singleton(
+            XemPhimRepositoryInterface::class,
+            XemPhimRepository::class,
+        );
+
+        //TimKiem Repositories
+        $this->app->singleton(
+            TimKiemRepositoryInterface::class,
+            TimKiemRepository::class,
         );
     }
 

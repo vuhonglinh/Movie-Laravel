@@ -21,8 +21,9 @@
                                 @enderror
                             </div>
                             <button class="sign__btn" type="submit">Gửi</button>
-
-                            <span class="sign__text">Chúng tôi sẽ gửi mật khẩu vào Email của bạn</span>
+                            @if (session('status'))
+                                <span class="sign__text">{{ session('status') }}</span>
+                            @endif
                         </form>
                         <!-- end authorization form -->
                     </div>

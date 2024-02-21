@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\ClientServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 use Modules\ModuleServiceProvider;
@@ -173,6 +174,7 @@ return [
         ModuleServiceProvider::class,
         DataTablesServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        ClientServiceProvider::class,
     ])->toArray(),
 
     /*

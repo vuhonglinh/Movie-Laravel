@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form__group">
-                                        <input value="{{ old('name') }}" type="text" name="name"
+                                        <input value="Tập {{ old('name') }}" type="text" name="name"
                                             class="title form__input" placeholder="Tên tập phim...">
                                         @error('name')
                                             <span style="color: red">{{ $message }}</span>

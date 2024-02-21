@@ -8,9 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Categories\src\Models\Category;
+use Modules\Comments\src\Models\Comment;
 use Modules\Countries\src\Models\Country;
 use Modules\Episodes\src\Models\Episode;
 use Modules\Genres\src\Models\Genre;
+use Modules\Reviews\src\Models\Review;
 
 class Movie extends Authenticatable
 {
@@ -31,6 +33,12 @@ class Movie extends Authenticatable
         'is_series',
     ];
 
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function countries()
     {
         return $this->belongsToMany(Country::class, 'movies_countries', 'movie_id', 'country_id');
@@ -48,6 +56,23 @@ class Movie extends Authenticatable
 
     public function episodes()
     {
-        return $this->belongsToMany(Episode::class, 'movies_episodes',  'movie_id','episode_id');
+        return $this->belongsToMany(Episode::class, 'movies_episodes',  'movie_id', 'episode_id');
+    }
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'movie_id', 'id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'movie_id', 'id');
+    }
+
+    public function averageRating()
+    {
+        $averageRating = $this->reviews->avg('star');
+        return $averageRating ? number_format($averageRating, 1) : '0.0';
     }
 }

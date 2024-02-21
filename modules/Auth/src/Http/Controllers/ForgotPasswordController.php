@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
-
 class ForgotPasswordController extends Controller
 {
     /*
@@ -21,6 +20,7 @@ class ForgotPasswordController extends Controller
     | your application to your users. Feel free to explore this trait.
     |
     */
+
     use SendsPasswordResetEmails;
     public function showLinkRequestForm()
     {
@@ -36,6 +36,7 @@ class ForgotPasswordController extends Controller
             ? $this->sendResetLinkResponse($request, $response)
             : $this->sendResetLinkFailedResponse($request, $response);
     }
+
     protected function validateEmail(Request $request)
     {
         $request->validate(
@@ -46,10 +47,24 @@ class ForgotPasswordController extends Controller
             ]
         );
     }
+
+    protected function sendResetLinkFailedResponse(Request $request, $response)
+    {
+        if ($request->wantsJson()) {
+            throw ValidationException::withMessages([
+                'email' => [trans($response)],
+            ]);
+        }
+
+        return back()
+                ->withInput($request->only('email'))
+                ->withErrors(['email' => 'Email không tồn tại']);
+    }
+
     protected function sendResetLinkResponse(Request $request, $response)
     {
         return $request->wantsJson()
-            ? new JsonResponse(['message' => trans($response)], 200)
+            ? new JsonResponse(['status' => 'Email đã được gửi trước đó'], 200)
             : back()->with('status', "Đã gửi yêu cầu lấy lại mật khẩu đến Email của bạn. Vui lòng kiểm tra");
     }
 }

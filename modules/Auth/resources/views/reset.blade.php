@@ -7,8 +7,10 @@
                 <div class="col-12">
                     <div class="sign__content">
                         <!-- authorization form -->
-                        <form action="" method="POST" class="sign__form">
+                        <form action="{{ route('admin.update.password') }}" method="POST" class="sign__form">
                             @csrf
+
+                            <input type="hidden" name="token" value="{{ $token }}">
                             <a href="index.html" class="sign__logo">
                                 <img src="{{ asset('/backend/img/logo.svg') }}" alt="">
                             </a>
@@ -29,7 +31,8 @@
                             </div>
 
                             <div class="sign__group">
-                                <input type="password" name="password_confirmation" class="sign__input" placeholder="Mật khẩu...">
+                                <input type="password" name="password_confirmation" class="sign__input"
+                                    placeholder="Xác nhận mật khẩu...">
                                 @error('password_confirmation')
                                     <span style="color: red">{{ $message }}</span>
                                 @enderror

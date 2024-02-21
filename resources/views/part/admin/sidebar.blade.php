@@ -1,14 +1,14 @@
 <div class="sidebar">
     <!-- sidebar logo -->
-    <a href="index.html" class="sidebar__logo">
-        <img src="img/logo.svg" alt="">
+    <a href="{{ route('admin.dashboard.index') }}" class="sidebar__logo">
+        <img src="{{ asset('/backend/img/logo.svg') }}" alt="">
     </a>
     <!-- end sidebar logo -->
 
     <!-- sidebar user -->
     <div class="sidebar__user">
         <div class="sidebar__user-title">
-            <a href="">
+            <a href="{{ route('admin.profile.index') }}">
                 <span>{{ auth()->user()->name }}</span>
             </a>
         </div>
@@ -34,11 +34,38 @@
 
 
         <!-- collapse -->
-        @include('part.admin.item_menu', ['name' => 'categories', 'tilte' => 'Danh mục'])
-        @include('part.admin.item_menu', ['name' => 'genres', 'tilte' => 'Thể loại'])
-        @include('part.admin.item_menu', ['name' => 'countries', 'tilte' => 'Quốc gia'])
-        @include('part.admin.item_menu', ['name' => 'movies', 'tilte' => 'Phim'])
-        @include('part.admin.item_menu', ['name' => 'users', 'tilte' => 'Quản trị viên'])
+        @can('categories', \Modules\Categories\src\Models\Category::class)
+            @include('part.admin.item_menu', ['name' => 'categories', 'tilte' => 'Danh mục'])
+        @endcan
+
+        @can('genres', \Modules\Genres\src\Models\Genre::class)
+            @include('part.admin.item_menu', ['name' => 'genres', 'tilte' => 'Thể loại'])
+        @endcan
+
+        @can('countries', \Modules\Countries\src\Models\Country::class)
+            @include('part.admin.item_menu', ['name' => 'countries', 'tilte' => 'Quốc gia'])
+        @endcan
+
+        @can('movies', \Modules\Movies\src\Models\Movie::class)
+            @include('part.admin.item_menu', ['name' => 'movies', 'tilte' => 'Phim'])
+        @endcan
+
+        @can('users', \Modules\Users\src\Models\User::class)
+            @include('part.admin.item_menu', ['name' => 'users', 'tilte' => 'Quản trị viên'])
+        @endcan
+
+        @can('customers', \Modules\Customers\src\Models\Customer::class)
+            @include('part.admin.item_menu', ['name' => 'customers', 'tilte' => 'Quản lý khách hàng'])
+        @endcan
+
+        @can('roles', \Modules\Roles\src\Models\Role::class)
+            @include('part.admin.item_menu', ['name' => 'roles', 'tilte' => 'Nhóm quản trị'])
+        @endcan
+
+
+        @can('roles', \Modules\Packages\src\Models\Package::class)
+            @include('part.admin.item_menu', ['name' => 'packages', 'tilte' => 'Quản lý gói phim'])
+        @endcan
         <!-- end collapse -->
     </ul>
     <!-- end sidebar nav -->

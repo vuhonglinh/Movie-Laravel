@@ -51,7 +51,10 @@
                                 <div class="col-6">
                                     <div class="form__group">
                                         <select class="js-example-basic-multiple" name="role_id" id="country">
-                                            <option value="1">Quản lý</option>
+                                            @foreach ($roles as $item)
+                                                <option {{ old('role_id') == $item->id ? 'selected' : false }}
+                                                    value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
                                         </select>
                                         @error('role_id')
                                             <span style="color: red">{{ $message }}</span>
