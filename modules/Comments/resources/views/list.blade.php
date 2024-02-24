@@ -32,10 +32,10 @@
                         <table id="myTable" class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th>Phim</th>
                                     <th>Nội dung bình luận</th>
-                                    <th>Khách hàng</th>
+                                    <th>Người bình luận</th>
                                     <th>Thời gian</th>
-                                    <th>Sửa</th>
                                     <th>Xóa</th>
                                 </tr>
                             </thead>
@@ -53,18 +53,18 @@
         new DataTable('#myTable', {
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.comments.data', request()->route()->id) }}",
+            ajax: "{{ route('admin.comments.data', request()->route()->movie) }}",
             "columns": [{
-                    data: 'name'
+                    data: 'movie'
                 },
                 {
-                    data: 'slug'
+                    data: 'content'
+                },
+                {
+                    data: 'customer'
                 },
                 {
                     data: 'created_at'
-                },
-                {
-                    data: 'edit'
                 },
                 {
                     data: 'delete'

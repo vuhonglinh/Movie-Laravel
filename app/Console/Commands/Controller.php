@@ -12,7 +12,7 @@ class Controller extends Command
      *
      * @var string
      */
-    protected $signature = 'module:controller {name} {module}';
+    protected $signature = 'module:controller {name} {module} {--api}';
 
     /**
      * The console command description.
@@ -29,6 +29,7 @@ class Controller extends Command
 
         $name = $this->argument('name');
         $module = $this->argument('module');
+        $option = $this->option('api');
         if (!File::exists(base_path('modules/' . $module))) {
             $this->error("Module '{$module}'not exists");
         }
@@ -39,7 +40,11 @@ class Controller extends Command
             if (File::exists($httpForder)) {
                 $controllerForder = $httpForder . '/Controllers';
                 if (!File::exists($controllerForder . ".php")) {
-                    $controllerFile = "app/Console/Commands/Templates/Controller.txt";
+                    if ($option) {
+                        $controllerFile = "app/Console/Commands/Templates/ControllerApi.txt";
+                    } else {
+                        $controllerFile = "app/Console/Commands/Templates/Controller.txt";
+                    }
                     $controllerContent = File::get($controllerFile);
                     $controllerContent = str_replace("{module}", $module, $controllerContent);
                     $controllerContent = str_replace("{name}", $name, $controllerContent);

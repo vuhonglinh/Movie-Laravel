@@ -1,4 +1,4 @@
-<div class="filter filter--fixed">
+{{-- <div class="filter filter--fixed">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -124,4 +124,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

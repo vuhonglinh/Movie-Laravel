@@ -22,6 +22,14 @@ function isRole($data, $module, $name = 'view')
     return false;
 }
 
-
+function isPower($data, $value)
+{
+    if (!empty($data)) {
+        if (!empty($data) && in_array($value, $data)) {
+            return true;
+        }
+    }
+    return false;
+}
 
 //Client

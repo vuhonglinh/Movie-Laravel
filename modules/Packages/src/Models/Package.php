@@ -18,5 +18,15 @@ class Package extends Authenticatable
         'name',
         'price',
         'duration',
+        'powers',
     ];
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
+    public function orders()
+    {
+        return $this->belongsTo(Package::class, 'package_id', 'id');
+    }
 }

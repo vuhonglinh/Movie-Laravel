@@ -9,7 +9,7 @@
                         <!-- authorization form -->
                         <form action="" method="POST" class="sign__form">
                             @csrf
-                            <a href="index.html" class="sign__logo">
+                            <a href="{{route('admin.login')}}" class="sign__logo">
                                 <img src="{{ asset('/backend/img/logo.svg') }}" alt="">
                             </a>
 

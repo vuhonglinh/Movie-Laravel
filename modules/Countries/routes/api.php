@@ -1,6 +1,6 @@
 <?php
-use Illuminate\Support\Facades\Route;
-Route::prefix('countries')->name('countries.')->group(function () {
-       //Route here
-});
 
+use Illuminate\Support\Facades\Route;
+use Modules\Countries\src\Http\Controllers\ApiCountryController;
+
+Route::apiResource('api/admin/countries', ApiCountryController::class);

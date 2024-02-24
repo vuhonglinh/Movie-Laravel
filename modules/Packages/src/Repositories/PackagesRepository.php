@@ -18,4 +18,20 @@ class PackagesRepository extends BaseRepository implements PackagesRepositoryInt
   {
     return Package::class;
   }
+
+  public function getAllPackages()
+  {
+    $users = auth('customer')->user();
+    if ($users) {
+      $orders = $users->orders->where('status', true);
+
+        $arrayId = [];
+        foreach ($orders as $order) {
+          array_push($arrayId, $order->package_id);
+        }
+        return $this->model->select(['id', 'name', 'price', 'duration', 'powers'])->whereNotIn('id', $arrayId)->get();
+      
+    }
+    return $this->model->select(['id', 'name', 'price', 'duration', 'powers'])->get();
+  }
 }

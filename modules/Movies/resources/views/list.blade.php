@@ -44,6 +44,7 @@
                                     <th style="width: 15%;">Thể loại</th>
                                     <th style="width: 15%;">Quốc gia</th>
                                     <th>Bình luận</th>
+                                    <th>Đánh giá</th>
                                     <th>Ngày tạo</th>
                                     <th>Sửa</th>
                                     <th>Xóa</th>
@@ -97,6 +98,9 @@
                 },
                 {
                     data: 'comments'
+                },
+                {
+                    data: 'star'
                 },
                 {
                     data: 'created_at'

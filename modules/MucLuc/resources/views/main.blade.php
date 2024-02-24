@@ -31,46 +31,49 @@
 
         <!-- catalog -->
         <div class="catalog">
-            <div class="container">
-                <div class="row row--grid">
-
-                    <!-- card -->
-                    @foreach ($movies as $item)
-                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                            <div class="card">
-                                <div class="card__cover">
-                                    <img src="{{ $item->thumbnail }}" alt="">
-                                    <a href="{{ route('xemphim.index', $item) }}" class="card__play">
-                                        <i class="icon ion-ios-play"></i>
-                                    </a>
-                                    <span
-                                        class="card__rate card__rate--green">{{ number_format($item->averageRating(), 1) }}</span>
-                                </div>
-                                <div class="card__content">
-                                    <h3 class="card__title"><a
-                                            href="{{ route('xemphim.index', $item) }}">{{ $item->name }}</a></h3>
-                                    <span class="card__category">
-                                        @foreach ($item->genres as $genre)
-                                            <a href="{{ route('mucluc.genres', $genre) }}">{{ $genre->name }}</a>
-                                        @endforeach
-                                    </span>
+            <div class="container" style="min-height: 395px">
+                @if ($movies->count() > 0)
+                    <div class="row row--grid">
+                        <!-- card -->
+                        @foreach ($movies as $item)
+                            <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                <div class="card">
+                                    <div class="card__cover">
+                                        <img src="{{ $item->thumbnail }}" alt="">
+                                        <a href="{{ route('xemphim.index', $item) }}" class="card__play">
+                                            <i class="icon ion-ios-play"></i>
+                                        </a>
+                                        <span
+                                            class="card__rate card__rate--green">{{ number_format($item->averageRating(), 1) }}</span>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title"><a
+                                                href="{{ route('xemphim.index', $item) }}">{{ $item->name }}</a></h3>
+                                        <span class="card__category">
+                                            @foreach ($item->genres as $genre)
+                                                <a href="{{ route('mucluc.genres', $genre) }}">{{ $genre->name }}</a>
+                                            @endforeach
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
 
-                    <!-- end card -->
-                </div>
-
-                <div class="row">
-                    <!-- paginator -->
-                    <div class="col-12">
-                        <ul class="paginator">
-                            {{ $movies->links() }}
-                        </ul>
+                        <!-- end card -->
                     </div>
-                    <!-- end paginator -->
-                </div>
+
+                    <div class="row">
+                        <!-- paginator -->
+                        <div class="col-12">
+                            <ul class="paginator">
+                                {{ $movies->links() }}
+                            </ul>
+                        </div>
+                        <!-- end paginator -->
+                    </div>
+                @else
+                    <h1 class="section__title">Không tìm thấy phim nào :(</h1>
+                @endif
             </div>
         </div>
         <!-- end catalog -->

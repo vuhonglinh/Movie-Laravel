@@ -11,12 +11,6 @@
                             href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry
                             Volkov</a></span>
 
-                    <nav class="footer__nav">
-                        <a href="about.html">About Us</a>
-                        <a href="contacts.html">Contacts</a>
-                        <a href="privacy.html">Privacy policy</a>
-                    </nav>
-
                     <button class="footer__back" type="button">
                         <i class="icon ion-ios-arrow-round-up"></i>
                     </button>

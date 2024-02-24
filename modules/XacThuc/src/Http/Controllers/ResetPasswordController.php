@@ -29,12 +29,11 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dang-nhap';
+    protected $redirectTo = '/trang-chu';
 
     public function showResetForm(Request $request)
     {
         $token = $request->route()->parameter('token');
-
         return view('xacthuc::reset')->with(
             ['token' => $token, 'email' => $request->email]
         );

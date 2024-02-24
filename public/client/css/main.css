@@ -1298,8 +1298,10 @@ ul {
   background-color: #222028;
 }
 .card__cover img {
-  width: 100%;
+  /* width: 100%; */
   transition: opacity 0.5s;
+  height: 278px;
+  width: 188px;
 }
 .card__cover:hover img {
   opacity: 0.4;

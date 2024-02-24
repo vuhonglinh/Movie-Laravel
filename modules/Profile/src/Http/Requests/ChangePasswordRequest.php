@@ -3,6 +3,7 @@
 namespace Modules\Profile\src\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordRequest extends FormRequest
 {
@@ -21,8 +22,13 @@ class ChangePasswordRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'oldpass' => 'required|min:5',
+            'oldpass' => ['required', 'min:5', function ($attributes, $value, $fail) {
+                if (!Hash::check($value, auth()->user()->password)) {
+                    $fail(__('profile::validation.required'));
+                }
+            }],
             'newpass' => 'required|min:5',
             'confirmpass' => 'same:newpass',
         ];

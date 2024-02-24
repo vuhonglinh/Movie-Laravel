@@ -8,6 +8,7 @@ return [
     'select' => ':attribute bắt buộc phải chọn',
     'integer' => ':attribute không hợp lệ',
     'same' => ':attribute không chính xác',
+    'fail' => ':attribute không chính xác',
     'attributes' => [
         'name' => 'Tên',
         'email' => 'Email',

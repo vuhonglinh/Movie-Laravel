@@ -65,7 +65,7 @@ return [
         'video'  => [
             'folder_name'  => 'videos',
             'startup_view' => 'list',
-            'max_size'     => 50000, // size in KB
+            'max_size'     => 5000000, // size in KB
             'thumb'        => true,
             'thumb_width'  => 80,
             'thumb_height' => 80,
@@ -76,7 +76,6 @@ return [
                 'video/x-msvideo',
                 'video/x-ms-wmv',
             ],
-  
         ],
         'trailer'  => [
             'folder_name'  => 'trailers',

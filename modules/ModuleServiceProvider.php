@@ -19,6 +19,8 @@ use Modules\Genres\src\Repositories\GenresRepository;
 use Modules\Genres\src\Repositories\GenresRepositoryInterface;
 use Modules\Movies\src\Repositories\MoviesRepository;
 use Modules\Movies\src\Repositories\MoviesRepositoryInterface;
+use Modules\Orders\src\Repositories\OrdersRepository;
+use Modules\Orders\src\Repositories\OrdersRepositoryInterface;
 use Modules\Packages\src\Repositories\PackagesRepository;
 use Modules\Packages\src\Repositories\PackagesRepositoryInterface;
 use Modules\Profile\src\Repositories\ProfileRepository;
@@ -27,12 +29,16 @@ use Modules\Reviews\src\Repositories\ReviewsRepository;
 use Modules\Reviews\src\Repositories\ReviewsRepositoryInterface;
 use Modules\Roles\src\Repositories\RolesRepository;
 use Modules\Roles\src\Repositories\RolesRepositoryInterface;
+use Modules\ThanhToan\src\Repositories\ThanhToanRepository;
+use Modules\ThanhToan\src\Repositories\ThanhToanRepositoryInterface;
 use Modules\TimKiem\src\Repositories\TimKiemRepository;
 use Modules\TimKiem\src\Repositories\TimKiemRepositoryInterface;
 use Modules\TrangChu\src\Repositories\TrangChuRepository;
 use Modules\TrangChu\src\Repositories\TrangChuRepositoryInterface;
 use Modules\Users\src\Repositories\UsersRepository;
 use Modules\Users\src\Repositories\UsersRepositoryInterface;
+use Modules\Vnpay\src\Repositories\VnpayRepository;
+use Modules\Vnpay\src\Repositories\VnpayRepositoryInterface;
 use Modules\XemPhim\src\Repositories\XemPhimRepository;
 use Modules\XemPhim\src\Repositories\XemPhimRepositoryInterface;
 
@@ -126,6 +132,18 @@ class ModuleServiceProvider extends ServiceProvider
             PackagesRepository::class,
         );
 
+        //Orders Repositories
+        $this->app->singleton(
+            OrdersRepositoryInterface::class,
+            OrdersRepository::class,
+        );
+
+        //Vnpay Repositories
+        $this->app->singleton(
+            VnpayRepositoryInterface::class,
+            VnpayRepository::class,
+        );
+
         ///////Client///////////
         //TrangChu Repositories
         $this->app->singleton(
@@ -143,6 +161,12 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->singleton(
             TimKiemRepositoryInterface::class,
             TimKiemRepository::class,
+        );
+
+        //ThanhToan Repositories
+        $this->app->singleton(
+            ThanhToanRepositoryInterface::class,
+            ThanhToanRepository::class,
         );
     }
 
@@ -201,7 +225,7 @@ class ModuleServiceProvider extends ServiceProvider
             }
         });
 
-        Route::middleware('web')->group(function () use ($modulePath) {
+        Route::middleware('api')->group(function () use ($modulePath) {
             if (File::exists($modulePath . "/routes/api.php")) { //Khai báo Api
                 $this->loadRoutesFrom($modulePath . "/routes/api.php");
             }

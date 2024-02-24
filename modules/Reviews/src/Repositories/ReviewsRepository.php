@@ -18,4 +18,11 @@ class ReviewsRepository extends BaseRepository implements ReviewsRepositoryInter
   {
     return Review::class;
   }
+
+  public function totalReviews()
+  {
+    return $this->model->count();
+  }
+
+
 }

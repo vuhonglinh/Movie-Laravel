@@ -35,6 +35,7 @@
                                     <th>Tên thể loại</th>
                                     <th>Gía</th>
                                     <th>Thời gian sử dụng</th>
+                                    <th>Quyền</th>
                                     <th>Ngày tạo</th>
                                     <th>Sửa</th>
                                     <th>Xóa</th>
@@ -63,6 +64,9 @@
                 },
                 {
                     data: 'duration'
+                },
+                {
+                    data: 'powers'
                 },
                 {
                     data: 'created_at'

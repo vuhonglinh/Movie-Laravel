@@ -1,0 +1,48 @@
+<?php
+
+namespace Modules\{module}\src\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class {name} extends Controller
+{
+    /**
+     * Hiển thị danh sách
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Thêm mới
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Hiển thị chi tiết 
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Cập nhật 
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Xóa
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}

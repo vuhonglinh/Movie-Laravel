@@ -10,7 +10,12 @@
             <div class="row">
                 <!-- title -->
                 <div class="col-12">
-                    <h1 class="section__title section__title--mb">{{ $movie->name }}</h1>
+                    <h1 class="section__title section__title--mb">{{ $movie->name }}
+                        @if (!empty($episode))
+                            {{ $episode->name }}
+                        @endif
+                    </h1>
+
                 </div>
                 <!-- end title -->
 
@@ -40,11 +45,20 @@
                                             @endforeach
                                         </li>
                                         <li><span>Thời gian phát hành:</span> {{ $movie->release_date }}</li>
-                                        <li><span>Thời lượng:</span> 130 min</li>
+                                        <li><span>Chất lượng:</span> {{ $movie->quality }}</li>
                                         <li><span>Quốc gia:</span>
                                             @foreach ($movie->countries as $country)
-                                                <a href="{{ route('mucluc.countries', $country) }}">{{ $country->name }}</a>
+                                                <a
+                                                    href="{{ route('mucluc.countries', $country) }}">{{ $country->name }}</a>
                                             @endforeach
+                                        </li>
+                                        @if ($movie->is_series == 1)
+                                            <li><span> Phim bộ:</span>
+                                                @foreach ($movie->episodes as $episode)
+                                                    <a
+                                                        href="{{ route('xemphim.episode', ['movie' => $movie, 'episode' => $episode]) }}">{{ $episode->name }}</a>
+                                                @endforeach
+                                        @endif
                                         </li>
                                     </ul>
                                     <div class="card__description">
@@ -60,18 +74,33 @@
                 <!-- end content -->
 
                 <!-- player -->
-                <div class="col-12 col-xl-6">
-                    <video controls playsinline poster="{{ $movie->thumbnail }}" id="player"
-                        src="{{ $movie->movie_url }}">
-                        <!-- Video files -->
-                        <source src="{{ $movie->movie_url }}" type="video/mp4" size="576">
-                        <source src="{{ $movie->movie_url }}" type="video/mp4" size="720">
-                        <source src="{{ $movie->movie_url }}" type="video/mp4" size="1080">
+                @if ($episode)
+                    <div class="col-12 col-xl-6">
+                        <video controls playsinline poster="{{ $movie->thumbnail }}" id="player"
+                            src="{{ $episode->movie_url }}">
+                            <!-- Video files -->
+                            <source src="{{ $episode->movie_url }}" type="video/mp4" size="576">
+                            <source src="{{ $episode->movie_url }}" type="video/mp4" size="720">
+                            <source src="{{ $episode->movie_url }}" type="video/mp4" size="1080">
 
-                        <!-- Fallback for browsers that don't support the <video> element -->
-                        <a href="{{ $movie->movie_url }}" download>Download</a>
-                    </video>
-                </div>
+                            <!-- Fallback for browsers that don't support the <video> element -->
+                            <a href="{{ $episode->movie_url }}" download>Download</a>
+                        </video>
+                    </div>
+                @else
+                    <div class="col-12 col-xl-6">
+                        <video controls playsinline poster="{{ $movie->thumbnail }}" id="player"
+                            src="{{ $movie->movie_url }}">
+                            <!-- Video files -->
+                            <source src="{{ $movie->movie_url }}" type="video/mp4" size="576">
+                            <source src="{{ $movie->movie_url }}" type="video/mp4" size="720">
+                            <source src="{{ $movie->movie_url }}" type="video/mp4" size="1080">
+
+                            <!-- Fallback for browsers that don't support the <video> element -->
+                            <a href="{{ $movie->movie_url }}" download>Download</a>
+                        </video>
+                    </div>
+                @endif
                 <!-- end player -->
             </div>
         </div>
@@ -117,8 +146,9 @@
                                             href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Bình
                                             luận</a></li>
 
-                                    <li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2"
-                                            role="tab" aria-controls="tab-2" aria-selected="false">Đánh giá</a></li>
+                                    <li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab"
+                                            href="#tab-2" role="tab" aria-controls="tab-2"
+                                            aria-selected="false">Đánh giá</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -248,7 +278,33 @@
 
 
 @section('scripts')
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('player');
+            var viewed = false;
+            video.addEventListener('play', function() {
+                if (!viewed) {
+                    var tokenValue = $('input[name="_token"]').val();
+                    var data = {
+                        _token: tokenValue
+                    }
+                    $.ajax({
+                        url: "{{ route('xemphim.addView', request()->route()->movie) }}",
+                        type: "POST",
+                        data: data,
+                        typeData: 'html',
+                        success: function(data) {
+                            console.log(data);
+                            viewed = true;
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
     <script>
         function add_reviews(_this) {
             var star = $("input[name='star']:checked").val();

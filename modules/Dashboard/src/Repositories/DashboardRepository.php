@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Modules\Dashboard\src\Repositories;
 
@@ -14,7 +14,9 @@ class DashboardRepository extends BaseRepository implements DashboardRepositoryI
 
 {
 
-  public function getModel(){
-     
+  public function getModel()
+  {
   }
+
+ 
 }

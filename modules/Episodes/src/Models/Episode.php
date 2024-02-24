@@ -21,6 +21,10 @@ class Episode extends Authenticatable
         'movie_url',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     public function movies()
     {
         return $this->belongsToMany(Movie::class, 'movies_episodes', 'episode_id', 'movie_id');

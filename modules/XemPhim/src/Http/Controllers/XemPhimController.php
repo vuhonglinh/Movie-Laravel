@@ -5,7 +5,9 @@ namespace Modules\XemPhim\src\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Modules\Comments\src\Repositories\CommentsRepositoryInterface;
+use Modules\Episodes\src\Models\Episode;
 use Modules\Movies\src\Models\Movie;
+use Modules\Movies\src\Repositories\MoviesRepositoryInterface;
 use Modules\Reviews\src\Repositories\ReviewsRepositoryInterface;
 use Modules\XemPhim\src\Repositories\XemPhimRepositoryInterface;
 
@@ -14,19 +16,47 @@ class XemPhimController extends BaseController
     private $commentsRepo;
     private $reviewsRepo;
     private $xemPhimRepo;
-    public function __construct(CommentsRepositoryInterface $commentsRepo, ReviewsRepositoryInterface $reviewsRepo, XemPhimRepositoryInterface $xemPhimRepo)
+    private $moviesRepo;
+    public function __construct(MoviesRepositoryInterface $moviesRepo, CommentsRepositoryInterface $commentsRepo, ReviewsRepositoryInterface $reviewsRepo, XemPhimRepositoryInterface $xemPhimRepo)
     {
         $this->commentsRepo = $commentsRepo;
         $this->reviewsRepo = $reviewsRepo;
         $this->xemPhimRepo = $xemPhimRepo;
+        $this->moviesRepo = $moviesRepo;
     }
 
     public function index(Movie $movie)
     {
+        $user = auth('customer')->user();
+        if ($user->cant('view', $movie)) {
+            return redirect(route('trangchu.index'))->with('status', 'Bạn không thể xem bộ phim này. Vui lòng mua gói để được trải nghiệm bộ phim');
+        }
+        $episode = $movie->episodes->first();
         $comments = $this->renderComments($movie->comments);
         $reviews = $this->renderReviews($movie->reviews);
         $rateMovies = $this->xemPhimRepo->getHighlyRatedMovies($movie);
-        return view('xemphim::main', compact('movie', 'comments', 'reviews','rateMovies'));
+        return view('xemphim::main', compact('movie', 'comments', 'reviews', 'rateMovies', 'episode'));
+    }
+
+    public function episode(Movie $movie, Episode $episode)
+    {
+        $user = auth('customer')->user();
+        if ($user->cant('view', $movie)) {
+            return redirect(route('trangchu.index'))->with('status', 'Bạn không thể xem bộ phim này. Vui lòng mua gói để được trải nghiệm bộ phim');
+        }
+        $comments = $this->renderComments($movie->comments);
+        $reviews = $this->renderReviews($movie->reviews);
+        $rateMovies = $this->xemPhimRepo->getHighlyRatedMovies($movie);
+        return view('xemphim::episode', compact('movie', 'comments', 'reviews', 'rateMovies', 'episode'));
+    }
+
+    public function addView(Movie $movie)
+    {
+        $views = $movie->views + 1;
+        $this->moviesRepo->update($movie->id, [
+            'views' => $views,
+        ]);
+        return $movie;
     }
 
     public function add(Request $request, Movie $movie)

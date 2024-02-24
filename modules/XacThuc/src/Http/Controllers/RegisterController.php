@@ -43,7 +43,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'min:5'],
-            'email' => ['required', 'email', 'unique:customers'],
+            'email' => ['required', 'email', 'unique:customers,email'],
             'password' => ['required', 'min:5'],
         ], [
             'required' => ':attribute không được để trống',
@@ -65,8 +65,7 @@ class RegisterController extends Controller
         if ($response = $this->registered($request, $user)) {
             return $response;
         }
-        $sql = $this->resend($user);
-        dd($sql);
+
         return $request->wantsJson()
             ? new JsonResponse([], 201)
             : redirect($this->redirectPath())->with('status', 'Đăng ký thành công. Vui lòng kiểm tra Email để kích hoạt tài khoản');

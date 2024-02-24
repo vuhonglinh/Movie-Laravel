@@ -2,12 +2,17 @@
 
 namespace App\Providers;
 
+use App\Policies\MoviePolicy;
+use App\Policies\PackagePolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Modules\Roles\src\Models\Module;
 use Modules\Users\src\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Modules\Customers\src\Models\Customer;
+use Modules\Movies\src\Models\Movie;
+use Modules\Packages\src\Models\Package;
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,7 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Movie::class => MoviePolicy::class,
     ];
 
     /**
@@ -27,13 +32,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         //Thiết lập đường dẫn lấy lại mật khẩu cho users
         $this->registerPolicies();
-        ResetPassword::createUrlUsing(function (User $user, string $token) {
+
+        // Thiết lập đường dẫn lấy lại mật khẩu cho Users
+        ResetPasswordNotification::createUrlUsing(function ($user, string $token) {
             return route('admin.password.reset', ['token' => $token]) . "?email=" . $user->email;
         });
 
-
-        //Thiết lập đường dẫn lấy lại mật khẩu cho customers
-        ResetPassword::createUrlUsing(function (Customer $customer, string $token) {
+        // Thiết lập đường dẫn lấy lại mật khẩu cho Customers
+        ResetPasswordNotification::createUrlUsing(function ($customer, string $token) {
             return route('xacthuc.reset', ['token' => $token]) . "?email=" . $customer->email;
         });
 

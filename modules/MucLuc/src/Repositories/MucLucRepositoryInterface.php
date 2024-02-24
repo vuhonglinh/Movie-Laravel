@@ -10,5 +10,4 @@ use App\Repositories\RepositoryInterface;
 interface MucLucRepositoryInterface extends RepositoryInterface
 
 {
-
 }

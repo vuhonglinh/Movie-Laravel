@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Comments\src\Models\Comment;
+use Modules\Orders\src\Models\Order;
 use Modules\Reviews\src\Models\Review;
 
 class Customer extends Authenticatable
@@ -30,5 +31,10 @@ class Customer extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class, 'customer_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
     }
 }

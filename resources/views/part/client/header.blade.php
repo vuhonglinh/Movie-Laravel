@@ -59,18 +59,8 @@
                                 aria-expanded="false"><i class="icon ion-ios-more"></i></a>
 
                             <ul class="dropdown-menu header__dropdown-menu scrollbar-dropdown"
-                                aria-labelledby="dropdownMenuMore">
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="profile.html">Profile</a></li>
-                                <li><a href="contacts.html">Contacts</a></li>
-                                <li><a href="faq.html">Help center</a></li>
-                                <li><a href="privacy.html">Privacy policy</a></li>
-                                <li><a href="http://hotflix.volkovdesign.com/admin/index.html" target="_blank">Admin
-                                        pages</a></li>
-                                <li><a href="signin.html">Sign in</a></li>
-                                <li><a href="signup.html">Sign up</a></li>
-                                <li><a href="forgot.html">Forgot password</a></li>
-                                <li><a href="404.html">404 Page</a></li>
+                                aria-labelledby="dropdownMenuMore">    
+                                <li><a href="{{ route('hoso.index') }}">Hồ sơ</a></li>
                             </ul>
                         </li>
                         <!-- end dropdown -->
@@ -81,7 +71,8 @@
                     <div class="header__auth">
                         <form action="{{ route('timkiem.index') }}" method="GET" class="header__search">
                             @csrf
-                            <input class="header__search-input" name="name" required type="text" placeholder="Tìm kiếm phim...">
+                            <input class="header__search-input" name="name" required type="text"
+                                placeholder="Tìm kiếm phim...">
                             <button class="header__search-button" type="submit">
                                 <i class="icon ion-ios-search"></i>
                             </button>

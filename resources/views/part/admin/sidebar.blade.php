@@ -66,6 +66,26 @@
         @can('roles', \Modules\Packages\src\Models\Package::class)
             @include('part.admin.item_menu', ['name' => 'packages', 'tilte' => 'Quản lý gói phim'])
         @endcan
+
+        <li class="sidebar__nav-item">
+            <a href="{{ route('admin.orders.index') }}"
+                class="sidebar__nav-link  {{ routeActive('orders') ? 'collapsed' : false }}"><svg
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z" />
+
+                </svg> <span>Quản lý đơn hàng</span></a>
+        </li>
+
+
+        <li class="sidebar__nav-item">
+            <a href="{{ route('admin.vnpay.index') }}"
+                class="sidebar__nav-link  {{ routeActive('vnpay') ? 'collapsed' : false }}"><svg
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z" />
+                </svg> <span>Quản lý thanh toán</span></a>
+        </li>
         <!-- end collapse -->
     </ul>
     <!-- end sidebar nav -->

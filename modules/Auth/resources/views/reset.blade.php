@@ -11,7 +11,7 @@
                             @csrf
 
                             <input type="hidden" name="token" value="{{ $token }}">
-                            <a href="index.html" class="sign__logo">
+                            <a href="{{route('admin.login')}}" class="sign__logo">
                                 <img src="{{ asset('/backend/img/logo.svg') }}" alt="">
                             </a>
 

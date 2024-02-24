@@ -14,4 +14,7 @@ Route::prefix('admin/packages')->name('admin.packages.')->group(function () {
        Route::post('/edit/{id}', [PackageController::class, 'update'])->name('update')->can('packages.edit');
 
        Route::get('/delete/{id}', [PackageController::class, 'delete'])->name('delete')->can('packages.delete');
+
+       Route::get('/powers/{id}', [PackageController::class, 'powers'])->name('powers');
+       Route::post('/powers/{id}', [PackageController::class, 'postPowers']);
 });

@@ -31,6 +31,7 @@ class Movie extends Authenticatable
         "trailer_url",
         "movie_url",
         'is_series',
+        'views',
     ];
 
 
@@ -75,4 +76,5 @@ class Movie extends Authenticatable
         $averageRating = $this->reviews->avg('star');
         return $averageRating ? number_format($averageRating, 1) : '0.0';
     }
+
 }

@@ -17,4 +17,9 @@ class CommentsRepository extends BaseRepository implements CommentsRepositoryInt
   {
     return Comment::class;
   }
+
+  public function totalComments()
+  {
+    return $this->model->count();
+  }
 }

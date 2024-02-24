@@ -19,6 +19,10 @@ class CustomersRepository extends BaseRepository implements CustomersRepositoryI
     return Customer::class;
   }
 
+  public function getNewCustomers()
+  {
+    return $this->model->orderByDesc('created_at')->take(5)->get();
+  }
   public function getAllCustomers()
   {
     return $this->model->select(['id', 'name', 'email', 'password', 'created_at'])->latest()->get();

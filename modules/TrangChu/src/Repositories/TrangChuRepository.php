@@ -34,4 +34,17 @@ class TrangChuRepository extends BaseRepository implements TrangChuRepositoryInt
       $query->where('categories.id', 1);
     })->get();
   }
+
+  public function danhSachPhimDanhGiaCao()
+  {
+    return $this->model->select([
+      "id",
+      "thumbnail",
+      "name",
+      "slug",
+      "quality",
+      'is_series',
+      'created_at',
+    ])->orderBy('created_at','desc')->paginate(12);
+  }
 }

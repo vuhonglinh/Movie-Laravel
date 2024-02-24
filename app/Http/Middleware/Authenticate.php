@@ -16,7 +16,7 @@ class Authenticate extends Middleware
         if (!$request->expectsJson()) {
             $currentMiddleware = $request->route()->middleware();
             if (!empty($currentMiddleware) && in_array('auth:customer', $currentMiddleware)) {
-                return route('login');
+                return route('xacthuc.login');
             }
             return route('admin.login');
         }

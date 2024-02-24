@@ -170,10 +170,10 @@
                                         <span>Chất lượng:</span>
                                     </li>
                                     <li>
-                                        <input id="Full HD" value="Full HD" type="radio"
-                                            {{ old('quality') ?? $movie->quality == 'Full HD' ? 'checked' : false }}
+                                        <input id="FULL HD" value="FULL HD" type="radio"
+                                            {{ old('quality') ?? $movie->quality == 'FULL HD' ? 'checked' : false }}
                                             name="quality">
-                                        <label for="Full HD">Full HD</label>
+                                        <label for="FULL HD">Full HD</label>
                                     </li>
                                     <li>
                                         <input id="HD" value="HD" type="radio"
@@ -231,7 +231,7 @@
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="form__btn">Thêm mới</button>
+                            <button type="submit" class="form__btn">Cập nhật</button>
                         </div>
                     </form>
                 </div>
