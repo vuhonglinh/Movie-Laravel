@@ -19,7 +19,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'amount' => $this->amount,
             'expiry_date' => $this->expiry_date,
-            'customers' => CustomerResource::collection($this->whenLoaded(''))//Khi nó là 1 danh sách thì mới dùng
+            'customers' =>  $this->whenLoaded('customers')
         ];
     }
 }

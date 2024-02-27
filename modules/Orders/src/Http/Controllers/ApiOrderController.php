@@ -15,7 +15,7 @@ class ApiOrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('id', 'desc')->with('customers')->paginate();
+        $orders = Order::orderBy('id', 'desc')->with('customers')->paginate(1);
 
         if ($orders->count() > 0) {
             $status = 200;

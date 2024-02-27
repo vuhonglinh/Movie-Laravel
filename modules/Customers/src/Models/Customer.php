@@ -10,8 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Modules\Comments\src\Models\Comment;
 use Modules\Orders\src\Models\Order;
 use Modules\Reviews\src\Models\Review;
-
-class Customer extends Authenticatable
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+class Customer extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 

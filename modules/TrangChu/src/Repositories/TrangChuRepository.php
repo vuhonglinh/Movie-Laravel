@@ -45,6 +45,6 @@ class TrangChuRepository extends BaseRepository implements TrangChuRepositoryInt
       "quality",
       'is_series',
       'created_at',
-    ])->orderBy('created_at','desc')->paginate(12);
+    ])->orderBy('created_at', 'desc')->paginate(12);
   }
 }

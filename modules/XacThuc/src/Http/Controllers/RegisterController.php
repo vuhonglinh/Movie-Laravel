@@ -3,7 +3,8 @@
 namespace Modules\XacThuc\src\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Jobs\SendMailRegister;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class RegisterController extends Controller
 {
@@ -61,10 +63,12 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
-        if ($response = $this->registered($request, $user)) {
+        event(new Registered($customer = $this->create($request->all())));
+        if ($response = $this->registered($request, $customer)) {
             return $response;
         }
+
+        $this->resend($customer);
 
         return $request->wantsJson()
             ? new JsonResponse([], 201)
@@ -74,15 +78,23 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return Customer::create([
+        $customer = Customer::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        return $customer;
     }
 
     protected function guard()
     {
         return Auth::guard('customer');
+    }
+
+
+    public function resend(Customer $customer)
+    {
+        $customer->sendEmailVerificationNotification();
     }
 }

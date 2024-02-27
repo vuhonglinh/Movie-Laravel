@@ -17,7 +17,7 @@ class EnsureEmailIsVerified
      */
     public static function redirectTo($route)
     {
-        return static::class.':'.$route;
+        return static::class . ':' . $route;
     }
 
     /**
@@ -30,12 +30,10 @@ class EnsureEmailIsVerified
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if (! $request->user() ||
-            ($request->user() instanceof MustVerifyEmail &&
-            ! $request->user()->hasVerifiedEmail())) {
+        if (!$request->user() || ($request->user() instanceof MustVerifyEmail && !$request->user()->hasVerifiedEmail())) {
             return $request->expectsJson()
-                    ? abort(403, 'Your email address is not verified.')
-                    : Redirect::guest(URL::route($redirectToRoute ?: 'verification.notice'));
+                ? abort(404, 'Your email address is not verified.')
+                : redirect(route('trangchu.index'))->with('status', 'Vui lòng xác nhận email');
         }
 
         return $next($request);
