@@ -3,6 +3,7 @@
 namespace Modules\Movies\src\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\GenreResource;
 use App\Http\Resources\MovieCollection;
 use App\Http\Resources\MovieResource;
 use Illuminate\Http\Request;
@@ -16,8 +17,8 @@ class ApiMovieController extends Controller
      */
     public function index()
     {
-        $data = Movie::orderBy('id', 'desc')->with('genres')->paginate(4);
-        if ($data->count() < 0) {
+        $data = Movie::orderBy('id', 'desc')->with(['genres', 'countries'])->paginate(4);
+        if ($data->count() === 0) {
             $statusCode = 404;
             $statusText = 'Not Found';
         } else {
@@ -25,7 +26,6 @@ class ApiMovieController extends Controller
             $statusText = 'success';
         }
         $data = new MovieCollection($data, $statusCode, $statusText);
-
         return $data;
     }
 
@@ -55,7 +55,7 @@ class ApiMovieController extends Controller
      */
     public function show($id)
     {
-        $data = Movie::with('genres')->find($id);
+        $data = Movie::with(['genres', 'countries'])->find($id);
 
         if (!$data) {
             $statusCode = 404;
@@ -65,12 +65,11 @@ class ApiMovieController extends Controller
             $statusText = 'Success';
         }
         $data = new MovieResource($data);
-        $response = [
+        return response()->json([
             'status' => $statusCode,
             'message' => $statusText,
-            'data' => $data
-        ];
-        return $response;
+            'data' => $data,
+        ], 200);
     }
 
     /**

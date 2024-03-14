@@ -9,6 +9,8 @@ use Modules\XacThuc\src\Http\Controllers\ResetPasswordController;
 use Modules\XacThuc\src\Http\Controllers\VerificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
+use Modules\Customers\src\Models\Customer;
 
 Route::name('xacthuc.')->group(function () {
        Route::get('dang-nhap', [LoginController::class, 'showLoginForm'])->name('login');
@@ -32,3 +34,23 @@ Route::get('/kich-hoat-tai-khoan/{id}/{hash}', function (EmailVerificationReques
        $request->fulfill();
        return redirect('/trang-chu');
 })->middleware(['auth:customer', 'signed'])->name('verification.verify');
+
+
+Route::get('/dang-nhap-facebook', function () {
+       return Socialite::driver('facebook')->redirect();
+})->name('facebook');
+
+Route::get('/facebook/callback', function () {
+       $user = Socialite::driver('github')->user();
+       // Customer::create($user);
+});
+
+
+Route::get('/dang-nhap-google', function () {
+       return Socialite::driver('google')->redirect();
+})->name('google');
+
+Route::get('/google/callback', function () {
+       $user = Socialite::driver('google')->user();
+       // Customer::create($user);
+});

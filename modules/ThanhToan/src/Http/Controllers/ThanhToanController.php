@@ -2,6 +2,7 @@
 
 namespace Modules\ThanhToan\src\Http\Controllers;
 
+use App\Jobs\CheckoutSuccess;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Carbon;
@@ -150,11 +151,12 @@ class ThanhToanController extends BaseController
 
     public function checkOutVnpay(Request $request, Package $package)
     {
+
         if ($request->vnp_ResponseCode == 00) { //Khi thanh toán thành công
-            $customer_id = auth('customer')->user()->id;
+            $customer = auth('customer')->user();
             //Lưu đơn hàng
             $order = $this->ordersRepo->create([
-                'customer_id' => $customer_id,
+                'customer_id' => $customer->id,
                 'package_id' => $package->id,
                 'total_amount' =>  $package->price,
                 'expiry_date' => Carbon::now()->addDays($package->duration), //Ngày hết hạn
@@ -170,7 +172,7 @@ class ThanhToanController extends BaseController
                 'tmn_code' => $request->vnp_TmnCode,
                 'order_id' => $order->id,
             ]);
-
+            dispatch(new CheckoutSuccess($customer, $order))->delay(Carbon::now()->addSeconds(10));
             return redirect()->route('hoso.index')->with('status', 'Thanh toán thành công');
         }
         return redirect()->route('hoso.index')->with('status', 'Thanh toán thất bại');

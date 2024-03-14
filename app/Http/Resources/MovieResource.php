@@ -19,6 +19,7 @@ class MovieResource extends JsonResource
             'name' => $this->name,
             'views' => $this->views,
             'genres' => GenreResource::collection($this->whenLoaded('genres')),
+            'countries' => CountryResource::collection($this->whenLoaded('countries')),
         ];
     }
 }

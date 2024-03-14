@@ -37,7 +37,7 @@
     <!-- end header -->
 
     @yield('content')
-
+    @include('part.client.chatbox')
     <!-- footer -->
     @include('part.client.footer')
     <!-- end footer -->

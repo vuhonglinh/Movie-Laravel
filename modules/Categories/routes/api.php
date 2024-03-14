@@ -16,18 +16,3 @@ Route::prefix('api/admin/categories')->name('api.admin.categories.')->group(func
 
        Route::delete('/{id}', [ApiCategoryController::class, 'delete'])->name('delete');
 });
-
-
-// Xây dựng CRUD API
-
-// GET: /users => Lấy tất cả tài nguyên
-
-// GET: /users/id => Lấy 1 tài nguyên theo id
-
-// POST: /users => Thêm mới tài nguyên 
-
-// PUT: /users/id => Cập nhật tất cả các trường của tài nguyên
-
-// PATCH: /users/id => Cập nhật 1 vài trường của tài nguyên
-
-// DELETE: /users/id => Xóa 1 tài nguyên

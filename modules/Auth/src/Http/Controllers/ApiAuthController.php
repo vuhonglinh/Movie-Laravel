@@ -15,39 +15,34 @@ class ApiAuthController extends Controller
 {
     public function login(Request $request)
     {
-        //Validation
         $this->validateLogin($request);
-        $email = $request->email;
-        $password = $request->password;
-        //End Validation
-
-        //Login
-        $checkLogin =  Auth::attempt([
-            'email' => $email,
-            'password' => $password
-        ]);
-        //End login
-
-        //Check Login
-        if ($checkLogin) {
-            $user = $request->user();
-            // $token = $user->createToken('user_auth_token')->plainTextToken; //Tạo token cho đăng nhập
-            $token = $user->createToken('auth_api');
-            $accessToken = $token->accessToken;
-            $token->expires_at = Carbon::now()->addMinutes(60);
-            $expires = Carbon::parse($token->expires_at)->toDateTimeString();
-            $response = [
-                'status' => 200,
-                'accessToken' => $accessToken,
-                'expires' => $expires,
-            ];
-        } else {
-            $response = [
-                'status' => 400,
-                'message' => 'Unauthorized'
-            ];
+        if (!Auth::attempt($request->all())) {
+            return response()->json(['status' => 404, 'error' => 'Unauthorized']);
         }
-        //End check login
+        $user = $request->user(); //Lấy ra user
+        $data = $user->createToken('user_auth'); //Tạo ra token
+        $token = $data->token;
+        $token->expires_at = Carbon::now()->addMinutes(60);
+        $token->save();
+        $accessToken = $data->accessToken;
+        $expires = Carbon::parse($token->expires_at)->toDateTimeString();
+        return response()->json(['status' => 200, 'accessToken' => $accessToken, 'message' => 'User login in successfully', 'expires' => $expires]);
+    }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        return response()->json(['status' => 200, 'user' => $user]);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->token()->revoke(); //Xóa token
+        $response = [
+            'status' => 204,
+            'message' => 'Logout successfully',
+        ];
         return $response;
     }
 
@@ -58,12 +53,10 @@ class ApiAuthController extends Controller
         $email = $request->email;
         $password = $request->password;
         //End Validation
-
         $client = Client::find(3);
         if ($client) {
             $clientSecret = $client->secret;
             $clientId = $client->id;
-
             //Cấp refresh token
             $response = Http::asForm()->post('http://127.0.0.1:8001/oauth/token', [
                 'grant_type' => 'password',
@@ -101,16 +94,6 @@ class ApiAuthController extends Controller
         }
     }
 
-    public function logout(Request $request)
-    {
-        $user = $request->user();
-        $user->token()->revoke(); //Xóa token
-        $response = [
-            'status' => 200,
-            'message' => 'Logout',
-        ];
-        return $response;
-    }
 
 
 

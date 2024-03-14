@@ -6,7 +6,7 @@ namespace Modules\Customers\src\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use Modules\Comments\src\Models\Comment;
 use Modules\Orders\src\Models\Order;
 use Modules\Reviews\src\Models\Review;

@@ -51,9 +51,11 @@ class Client extends Model
     /**
      * The temporary plain-text client secret.
      *
+     * This is only available during the request that created the client.
+     *
      * @var string|null
      */
-    protected $plainSecret;
+    public $plainSecret;
 
     /**
      * Bootstrap the model and its traits.
@@ -164,7 +166,7 @@ class Client extends Model
      */
     public function hasGrantType($grantType)
     {
-        if (! isset($this->grant_types) || ! is_array($this->grant_types)) {
+        if (! isset($this->attributes['grant_types']) || ! is_array($this->grant_types)) {
             return true;
         }
 
@@ -179,7 +181,7 @@ class Client extends Model
      */
     public function hasScope($scope)
     {
-        if (! isset($this->scopes) || ! is_array($this->scopes)) {
+        if (! isset($this->attributes['scopes']) || ! is_array($this->scopes)) {
             return true;
         }
 
